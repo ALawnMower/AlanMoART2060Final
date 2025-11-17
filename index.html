@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alan Mo - ART 2060 Final</title>
+    <!-- Link to the CSS stylesheet -->
+    <link rel="stylesheet" href="style.css" />
+    <!-- Load the p5.js library from a CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Alan Mo - ART 2060 Final</h1>
+    </header>
+
+    <main>
+      <section id="artwork">
+        <h2>Digital Erosion</h2>
+
+        <!-- 
+              This grid will hold the 4 canvas instances.
+              The sketch.js file will look for each ID.
+            -->
+        <div id="artwork-grid">
+          <div id="canvas-1" class="canvas-wrapper"></div>
+          <div id="canvas-2" class="canvas-wrapper"></div>
+          <div id="canvas-3" class="canvas-wrapper"></div>
+          <div id="canvas-4" class="canvas-wrapper"></div>
+        </div>
+
+        <p id="instructions">Hover over an image to animate.</p>
+      </section>
+
+      <section id="statement">
+        <h3>Artist Statement</h3>
+        <p>
+          This artwork, "Digital Erosion," uses code to look at ideas of order,
+          decay, and rebuilding. The four pictures each show a single, still
+          moment. When you move your mouse over a picture, a sorting algorithm
+          starts to run. This code rearranges the pixels in each column, sorting
+          them by the luminance. This creates an effect that looks like the
+          "erosion" of a landscape or the layers you'd see in rock. The code is
+          forcing a new, strict order on the original photo.
+        </p>
+        <p>
+          The images chosen were specifically selected to have very straight and
+          geometric lines, so that you are able to see the result of sorting the
+          columns based on luminance.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>ART 2060 - Final Project - Alan Mo</p>
+    </footer>
+
+    <!-- Link to your p5.js sketch file -->
+    <script src="sketch.js"></script>
+  </body>
+</html>
