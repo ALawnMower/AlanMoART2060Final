@@ -1,94 +1,74 @@
 /*
- * Pixel Sorting Sketch - 4 Instance Version
+ * Pixel Sorting Sketch - Unified Gallery
  * by Alan Mo
- *
- * This script uses p5.js "instance mode" to create four
- * independent sorting animations on the same page.
  */
 
 // --- CONFIGURATION ---
+// Array of 12 images
 const IMAGE_PATHS = [
-  "images/erosion-1.jpg",
-  "images/erosion-2.jpg",
-  "images/erosion-3.jpg",
-  "images/erosion-4.jpg",
+  "images/1.jpg",
+  "images/2.jpg",
+  "images/3.jpg",
+  "images/4.jpg",
+  "images/5.jpg",
+  "images/6.jpg",
+  "images/7.jpg",
+  "images/8.jpg",
+  "images/9.jpg",
+  "images/10.jpg",
+  "images/11.jpg",
+  "images/12.jpg"
 ];
 
-// The IDs of the HTML divs we will attach our canvases to.
-const CANVAS_CONTAINER_IDS = ["canvas-1", "canvas-2", "canvas-3", "canvas-4"];
+// IDs matching the HTML containers
+const CANVAS_CONTAINER_IDS = [
+  "canvas-1", "canvas-2", "canvas-3", "canvas-4",
+  "canvas-5", "canvas-6", "canvas-7", "canvas-8",
+  "canvas-9", "canvas-10", "canvas-11", "canvas-12"
+];
 
-// How many columns to process per frame. Higher = faster animation.
-const ANIMATION_SPEED = 4;
+const ANIMATION_SPEED = 5;
 // ---------------------
 
-/**
- * A "factory function" that creates a new, self-contained
- * p5.js sketch for a single image.
- * * @param {string} imagePath - The path to the image to load.
- * @returns {function} A function that p5.js can use as a sketch.
- */
 const sketchFactory = (imagePath) => {
-  // This is the function p5.js will run.
-  // We pass 'p' as an argument, which is the p5.js instance.
-  // This is how we call p5 functions like p.createCanvas() instead of createCanvas()
   return (p) => {
-    // --- Sketch-specific variables ---
     let originalImg;
     let displayImg;
     let sortProgress = 0;
     let isHovering = false;
-    // ---------------------------------
 
     p.preload = () => {
       originalImg = p.loadImage(imagePath);
-
-      // Resize the image if it's too large for performance
+      // Resize large images for performance
       if (originalImg.width > 800) {
-        originalImg.resize(800, 0); // 0 maintains aspect ratio
+        originalImg.resize(800, 0); 
       }
     };
 
     p.setup = () => {
+      // Create canvas matching image size
       let canvas = p.createCanvas(originalImg.width, originalImg.height);
-
-      // We'll be given the ID of our container when we're created
-      // (see the loop at the bottom of this file)
-
       canvas.mouseOver(startSort);
       canvas.mouseOut(startReset);
 
       p.pixelDensity(1);
       
-      // Create a new image buffer to draw to
       displayImg = p.createImage(originalImg.width, originalImg.height);
-
-      // Load the pixels for BOTH images
       originalImg.loadPixels();
       displayImg.loadPixels();
 
-      // Copy the original image into our display buffer
+      // Initialize display with original
       displayImg.copy(
-        originalImg,
-        0,
-        0,
-        originalImg.width,
-        originalImg.height,
-        0,
-        0,
-        displayImg.width,
-        displayImg.height
+        originalImg, 0, 0, originalImg.width, originalImg.height,
+        0, 0, displayImg.width, displayImg.height
       );
 
-      // Draw the initial image
       p.image(displayImg, 0, 0);
-
-      // Stop the draw() loop
       p.noLoop();
     };
 
     p.draw = () => {
       if (isHovering) {
-        // --- SORTING (on hover) ---
         if (sortProgress < p.width) {
           let endCol = p.min(sortProgress + ANIMATION_SPEED, p.width);
 
@@ -96,107 +76,72 @@ const sketchFactory = (imagePath) => {
             let columnPixels = [];
             for (let y = 0; y < p.height; y++) {
               let index = (y * p.width + x) * 4;
-              let r = originalImg.pixels[index + 0];
-              let g = originalImg.pixels[index + 1];
-              let b = originalImg.pixels[index + 2];
-              let a = originalImg.pixels[index + 3];
-              columnPixels.push([r, g, b, a]);
+              columnPixels.push([
+                originalImg.pixels[index + 0],
+                originalImg.pixels[index + 1],
+                originalImg.pixels[index + 2],
+                originalImg.pixels[index + 3]
+              ]);
             }
 
-            // --- SORT LOGIC ---
-            // Sort the pixels: by brightness/luminance (ascending)
-            columnPixels.sort((a, b) => {
-              return p.brightness(a) - p.brightness(b);
-            });
-            // ------------------
+            // Sort based on brightness
+            columnPixels.sort((a, b) => p.brightness(a) - p.brightness(b));
 
-            // Draw the sorted pixels back to the display image buffer
             for (let y = 0; y < p.height; y++) {
               let sortedColor = columnPixels[y];
               let index = (y * p.width + x) * 4;
-              displayImg.pixels[index + 0] = sortedColor[0]; // R
-              displayImg.pixels[index + 1] = sortedColor[1]; // G
-              displayImg.pixels[index + 2] = sortedColor[2]; // B
-              displayImg.pixels[index + 3] = 255; // Force 100% opacity
+              displayImg.pixels[index + 0] = sortedColor[0];
+              displayImg.pixels[index + 1] = sortedColor[1];
+              displayImg.pixels[index + 2] = sortedColor[2];
+              displayImg.pixels[index + 3] = 255; 
             }
           }
-
           displayImg.updatePixels();
           sortProgress = endCol;
         } else {
           p.noLoop();
         }
       } else {
-        // --- RESETTING (on unhover) ---
+        // Reset animation logic
         if (sortProgress > 0) {
           let startCol = p.max(0, sortProgress - ANIMATION_SPEED);
-
           displayImg.copy(
-            originalImg, // Source
-            startCol,
-            0, // Source X, Y
-            ANIMATION_SPEED,
-            p.height, // Source W, H
-            startCol,
-            0, // Dest X, Y
-            ANIMATION_SPEED,
-            p.height
-          ); // Dest W, H
-
+            originalImg, startCol, 0, ANIMATION_SPEED, p.height, 
+            startCol, 0, ANIMATION_SPEED, p.height
+          ); 
           sortProgress = startCol;
         } else {
           p.noLoop();
         }
       }
-
-      // At the end of every frame, draw the (now modified) displayImg
       p.image(displayImg, 0, 0);
     };
 
-    // --- Event Handlers ---
     function startSort() {
       isHovering = true;
-
-      // Always reset the progress and the image buffer on a new hover.
       sortProgress = 0;
       displayImg.copy(
-        originalImg,
-        0,
-        0,
-        originalImg.width,
-        originalImg.height,
-        0,
-        0,
-        displayImg.width,
-        displayImg.height
+        originalImg, 0, 0, originalImg.width, originalImg.height,
+        0, 0, displayImg.width, displayImg.height
       );
-
-      p.loop(); // Start the draw() loop
+      p.loop(); 
     }
 
     function startReset() {
       isHovering = false;
-      p.loop(); // Start the draw() loop
+      p.loop(); 
     }
-  }; // End of the sketch function
-}; // End of the factory
+  }; 
+}; 
 
-// --- Main Execution ---
-// This runs when the window is loaded.
-// It loops through our container IDs and creates a new
-// p5 sketch for each one.
 window.addEventListener("load", () => {
   for (let i = 0; i < CANVAS_CONTAINER_IDS.length; i++) {
-    // Get the image path and container ID
-    let imagePath = IMAGE_PATHS[i];
-    let containerID = CANVAS_CONTAINER_IDS[i];
-
-    // Create the sketch function
-    let sketch = sketchFactory(imagePath);
-
-    // Create a new p5 instance
-    // The 2nd arg is the ID of the HTML element
-    // to attach the canvas to.
-    new p5(sketch, containerID);
+    // Check if the container exists to prevent errors
+    if(document.getElementById(CANVAS_CONTAINER_IDS[i])) {
+      let imagePath = IMAGE_PATHS[i];
+      let containerID = CANVAS_CONTAINER_IDS[i];
+      let sketch = sketchFactory(imagePath);
+      new p5(sketch, containerID);
+    }
   }
 });

@@ -3,70 +3,102 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alan Mo - ART 2060 Final</title>
-    <!-- Link to the CSS stylesheet -->
+    <title>Alan Mo - Relative Perspectives</title>
     <link rel="stylesheet" href="style.css" />
-    <!-- Load the p5.js library from a CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.js"></script>
   </head>
   <body>
     <header>
-      <h1>Alan Mo - ART 2060 Final</h1>
+      <h1>Relative Perspectives</h1>
+      <p
+        style="
+          color: #e0e0e0;
+          margin-top: -1rem;
+          margin-bottom: 2rem;
+          font-size: 0.9rem;
+          letter-spacing: 1px;
+        "
+      >
+        ALAN MO - ART 2060 FINAL
+      </p>
     </header>
 
     <main>
-      <section id="artwork">
-        <h2>Digital Erosion</h2>
+      <section id="instructions-section">
+        <p id="instructions">
+          Hover over the images below to activate the sorting algorithm. Observe
+          how the pixels rearrange based on their luminance.
+        </p>
+        <p id="instructions">
+          Refresh the page if images don't reset after hovering.
+        </p>
+      </section>
 
-        <!-- 
-              This grid will hold the 4 canvas instances.
-              The sketch.js file will look for each ID.
-            -->
+      <section id="artwork">
         <div id="artwork-grid">
           <div id="canvas-1" class="canvas-wrapper"></div>
           <div id="canvas-2" class="canvas-wrapper"></div>
           <div id="canvas-3" class="canvas-wrapper"></div>
           <div id="canvas-4" class="canvas-wrapper"></div>
+          <div id="canvas-5" class="canvas-wrapper"></div>
+          <div id="canvas-6" class="canvas-wrapper"></div>
+          <div id="canvas-7" class="canvas-wrapper"></div>
+          <div id="canvas-8" class="canvas-wrapper"></div>
+          <div id="canvas-9" class="canvas-wrapper"></div>
+          <div id="canvas-10" class="canvas-wrapper"></div>
+          <div id="canvas-11" class="canvas-wrapper"></div>
+          <div id="canvas-12" class="canvas-wrapper"></div>
         </div>
-
-        <p id="instructions">Hover over an image to animate.</p>
       </section>
-
       <section id="statement">
         <h3>Artist Statement</h3>
         <p>
-          This project explores the intersection of code and visual art through
-          the manipulation of images using sorting algorithms. Digital Erosion
-          uses JavaScript to create interactive images that respond to user
-          input. These show how an image can be transformed from it's original
-          state into something new and possibly unexpected.
+          This project explores the intersection between code and visual art
+          through the manipulation of images using pixel sorting algorithms.
+          <strong>Relative Perspectives</strong> uses JavaScript to create
+          interactive images that respond to user input, sorting columns of
+          pixels based on their perceived luminance. This fluidity exposes the
+          fragility of the digital image, serving as a metaphor for how easily
+          individuals in society can be manipulated. It suggests that our
+          perceived stability is not secure, and is just waiting for an external
+          force to reorder our reality.
         </p>
         <p>
-          When the user hovers over each canvas, each column of the image is
-          sorted based on the luminance of each pixel in that column. Depending
-          on the original image, this can create a variety of effects, from
-          smoothing and blurring to more chaotic and fragmented appearances.
+          The purpose of this project is to highlight how the perspective of an
+          object can either change drastically or remain relatively consistent
+          depending on its internal structure. This acts as an allegory for
+          digital governance: the algorithm used here is mathematically
+          unbiased, treating every pixel with the exact same logic. Yet, the
+          results of this non-bias still produce dramatically different effects.
+          It demonstrates that applying a neutral rule to an unequal society
+          doesn't remove inequality. Instead, the initial conditions of the
+          subject determine the final path.
         </p>
         <p>
-          Some images were specifically selected to have very straight and
-          geometric lines, so that you are able to see the result of sorting the
-          columns based on luminance. Other images were selected to have more
-          organic and complex patterns which results in something more
-          unexpected when the columns are sorted.
+          Across this collection of twelve images, you will see varying degrees
+          of entropy. Some images possess a structure that results in very
+          little change, appearing basically the same, while others flip into
+          mirrored perspectives or dissolve into complex, chaotic abstractions.
+          This visualizes the flaw in trying to strip bias from our
+          computational models such as machine learning algorithms. If bias is a
+          reflection of our real world, removing it often means introducing
+          artificial data, and keeping the biased model would be the most
+          accurate representation of the world.
         </p>
         <p>
-          There may be issues where the image isn't completely reset to its
-          original state when the mouse is no longer hovering over the canvas.
-          Please refresh the page to reset the images.
+          Ultimately, this work questions why we try so hard to make technology
+          neutral when neutrality does not actually make things fair. Even if an
+          algorithm treats everyone exactly the same, the inherent inequalities
+          in the starting data guarantees that the results will still be
+          unequal.
         </p>
       </section>
     </main>
 
     <footer>
-      <p>ART 2060 - Final Project - Alan Mo</p>
+      <p>Relative Perspectives - Alan Mo</p>
     </footer>
 
-    <!-- Link to your p5.js sketch file -->
     <script src="sketch.js"></script>
   </body>
 </html>
